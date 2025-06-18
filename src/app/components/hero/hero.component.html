@@ -1,0 +1,100 @@
+<div class="hero-container">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-greeting">
+        <span class="greeting-text">¡Hola! Soy</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span class="gradient-text">Ancaor</span>
+      </h1>
+
+      <h2 class="hero-subtitle">
+        <span class="text-gradient">Desarrollador Full Stack</span>
+      </h2>
+
+      <p class="hero-description">
+        Creo experiencias digitales únicas y soluciones innovadoras.
+        Especializado en tecnologías modernas y diseño centrado en el usuario.
+      </p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">3+</span>
+          <span class="stat-label">Años de experiencia</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">50+</span>
+          <span class="stat-label">Proyectos completados</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">15+</span>
+          <span class="stat-label">Tecnologías dominadas</span>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary" (click)="scrollToProjects()">
+          Ver Proyectos
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a href="#contact" class="btn btn-secondary" (click)="scrollToContact()">
+          Contactar
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="code-window">
+        <div class="window-header">
+          <div class="window-controls">
+            <span class="control red"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+          </div>
+          <div class="window-title">portfolio.ts</div>
+        </div>
+        <div class="window-content">
+          <pre><code class="language-typescript">
+<span class="keyword">interface</span> <span class="class">Developer</span> {{ '{' }}
+  <span class="property">name</span>: <span class="string">'Ancaor'</span>;
+  <span class="property">role</span>: <span class="string">'Full Stack Developer'</span>;
+  <span class="property">skills</span>: [
+    <span class="string">'Angular'</span>,
+    <span class="string">'React'</span>,
+    <span class="string">'Node.js'</span>,
+    <span class="string">'TypeScript'</span>
+  ];
+  <span class="property">passion</span>: <span class="string">'Creating amazing experiences'</span>;
+{{ '}' }}
+
+<span class="keyword">const</span> <span class="variable">me</span>: <span class="class">Developer</span> = {{ '{' }}
+  <span class="property">name</span>: <span class="string">'Ancaor'</span>,
+  <span class="property">role</span>: <span class="string">'Full Stack Developer'</span>,
+  <span class="property">skills</span>: [
+    <span class="string">'Angular'</span>,
+    <span class="string">'React'</span>,
+    <span class="string">'Node.js'</span>,
+    <span class="string">'TypeScript'</span>
+  ],
+  <span class="property">passion</span>: <span class="string">'Creating amazing experiences'</span>
+{{ '}' }};
+
+<span class="keyword">export default</span> <span class="variable">me</span>;
+          </code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-background">
+    <div class="floating-elements">
+      <div class="floating-element element-1"></div>
+      <div class="floating-element element-2"></div>
+      <div class="floating-element element-3"></div>
+      <div class="floating-element element-4"></div>
+    </div>
+  </div>
+</div>
