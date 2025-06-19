@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  ViewChild,
+} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
@@ -15,10 +21,10 @@ import { ProjectsComponent } from './components/projects/projects.component';
     HeroComponent,
     AboutComponent,
     ProjectsComponent,
-    ContactComponent
+    ContactComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild('sectionsContainer') sectionsContainer!: ElementRef;
@@ -51,20 +57,42 @@ export class AppComponent implements AfterViewInit {
   }
 
   scrollToSection(sectionId: string) {
+    console.log(
+      '%csrcappapp.component.ts:54 sectionId',
+      'color: #007acc;',
+      sectionId
+    );
     const index = this.sections.indexOf(sectionId);
+    console.log('%csrcappapp.component.ts:66 index', 'color: #007acc;', index);
     if (index !== -1) {
       this.scrollToSectionIndex(index);
     }
   }
 
   scrollToSectionIndex(index: number) {
+    console.log('%csrcappapp.component.ts:73 index', 'color: #007acc;', index);
     const container = this.sectionsContainer.nativeElement;
+    console.log(
+      '%csrcappapp.component.ts:74 container',
+      'color: #007acc;',
+      container
+    );
     const sectionWidth = window.innerWidth;
+    console.log(
+      '%csrcappapp.component.ts:80 sectionWidth',
+      'color: #007acc;',
+      sectionWidth
+    );
     container.scrollTo({
       left: index * sectionWidth,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
     this.currentSection = index;
+    console.log(
+      '%csrcappapp.component.ts:85 this.currentSection',
+      'color: #007acc;',
+      this.currentSection
+    );
   }
 
   toggleMenu() {
