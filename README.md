@@ -181,7 +181,7 @@ Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más det
 
 - GitHub: [@AncaorDev](https://github.com/AncaorDev)
 - LinkedIn: [Anthony Cajacuri](https://linkedin.com/in/anthony-cajacuri)
-- Portfolio: [ancaor.dev](https://ancaor.dev)
+- Portfolio: [ancaor.com](https://ancaor.com)
 
 ## 🙏 Agradecimientos
 
