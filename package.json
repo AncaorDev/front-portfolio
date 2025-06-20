@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "start:dev" : "ng serve",
+    "start": "node dist/front-ancaor/server/server.mjs",
+    "start:dev": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:front-ancaor": "node dist/front-ancaor/server/server.mjs"
+    "serve:ssr:front-ancaor": "node dist/front-ancaor/server/server.mjs",
+    "deploy:prod": "gcloud app deploy app.yaml --version=20240224t144814 --project=ancaor-tec --account=ancaor.data@gmail.com"
   },
   "private": true,
   "dependencies": {
