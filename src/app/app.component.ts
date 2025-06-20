@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  ViewChild,
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostListener,
+    OnInit,
+    ViewChild,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { SeoService } from './services/seo.service';
 
 @Component({
   selector: 'app-root',
@@ -26,12 +28,19 @@ import { ProjectsComponent } from './components/projects/projects.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('sectionsContainer') sectionsContainer!: ElementRef;
 
   currentSection = 0;
   sections = ['home', 'about', 'projects', 'contact'];
   isMenuOpen = false;
+
+  constructor(private seoService: SeoService) {}
+
+  ngOnInit() {
+    // Initialize default SEO
+    this.seoService.resetToDefault();
+  }
 
   ngAfterViewInit() {
     this.setupScrollListener();
