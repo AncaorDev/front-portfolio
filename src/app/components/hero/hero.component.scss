@@ -16,6 +16,7 @@
   width: 100%;
   padding: 0 2rem;
   z-index: 2;
+  height: inherit;
 }
 
 .hero-text {
@@ -125,9 +126,15 @@
   cursor: pointer;
 }
 
-.control.red { background: #ff5f56; }
-.control.yellow { background: #ffbd2e; }
-.control.green { background: #27ca3f; }
+.control.red {
+  background: #ff5f56;
+}
+.control.yellow {
+  background: #ffbd2e;
+}
+.control.green {
+  background: #27ca3f;
+}
 
 .window-title {
   color: var(--text-secondary);
@@ -142,7 +149,7 @@
 
 .window-content pre {
   margin: 0;
-  font-family: 'Fira Code', 'Monaco', 'Consolas', monospace;
+  font-family: "Fira Code", "Monaco", "Consolas", monospace;
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--text-primary);
@@ -154,11 +161,21 @@
 }
 
 /* Syntax highlighting */
-.keyword { color: #ff79c6; }
-.class { color: #8be9fd; }
-.property { color: #f8f8f2; }
-.string { color: #f1fa8c; }
-.variable { color: #bd93f9; }
+.keyword {
+  color: #ff79c6;
+}
+.class {
+  color: #8be9fd;
+}
+.property {
+  color: #f8f8f2;
+}
+.string {
+  color: #f1fa8c;
+}
+.variable {
+  color: #bd93f9;
+}
 
 .hero-background {
   position: absolute;
@@ -219,7 +236,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
   }
   33% {
@@ -288,5 +306,26 @@
 
   .window-content pre {
     font-size: 0.75rem;
+  }
+}
+
+.logo-ancaor {
+  width: 200px;
+  margin-top: -10px;
+}
+
+@media (max-width: 1024px) {
+  .logo-ancaor {
+    width: 200px;
+    margin-top: -10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo-ancaor {
+    text-align: center;
+    width: 200px;
+    margin: 0 auto;
+    padding-top: 80px;
   }
 }

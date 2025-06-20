@@ -12,7 +12,7 @@
   <nav class="navbar">
     <div class="nav-container">
       <div class="nav-logo">
-        <span class="gradient-text">Ancaor</span>
+        <span class="gradient-text">Anthony</span>
       </div>
       <div class="nav-links">
         <a href="#home" class="nav-link" (click)="scrollToSection('home')">Inicio</a>
@@ -55,11 +55,10 @@
 
   <!-- Indicadores de navegación -->
   <div class="nav-indicators">
-    <div class="indicator"
-         *ngFor="let section of sections; let i = index"
-         [class.active]="currentSection === i"
-         (click)="scrollToSectionIndex(i)">
-    </div>
+    <!-- <a href="#home" class="nav-link" (click)="scrollToSection('home')">Inicio</a> -->
+    <a class="indicator" *ngFor="let section of sections; let i = index" [class.active]="currentSection === i"
+      (click)="scrollToSection(section)" href="#{{ section }}">
+    </a>
   </div>
 </div>
 
