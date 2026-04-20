@@ -1,18 +1,21 @@
 import { CommonModule } from '@angular/common';
 import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    HostListener,
-    OnInit,
-    ViewChild,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AboutComponent } from './components/about/about.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { ProjectsComponent } from './components/projects/projects.component';
+import { LoaderComponent } from './components/loader/loader.component';
 import { SeoService } from './services/seo.service';
+import { PortfolioService } from './services/portfolio.service';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +27,27 @@ import { SeoService } from './services/seo.service';
     AboutComponent,
     ProjectsComponent,
     ContactComponent,
+    LoaderComponent,
+  ],
+  animations: [
+    trigger('sectionTransition', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms 200ms ease-out', style({ opacity: 1 })),
+      ]),
+    ]),
+    trigger('navReveal', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-20px)' }),
+        animate('600ms 3200ms ease-out', style({ opacity: 1, transform: 'translateY(0)' })),
+      ]),
+    ]),
+    trigger('indicatorReveal', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(20px)' }),
+        animate('600ms 3400ms ease-out', style({ opacity: 1, transform: 'translateX(0)' })),
+      ]),
+    ]),
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -35,10 +59,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   sections = ['home', 'about', 'projects', 'contact'];
   isMenuOpen = false;
 
-  constructor(private seoService: SeoService) {}
+  constructor(
+    private seoService: SeoService,
+    private portfolioService: PortfolioService
+  ) {}
 
   ngOnInit() {
-    // Initialize default SEO
     this.seoService.resetToDefault();
   }
 
@@ -66,49 +92,37 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSection(sectionId: string) {
-    console.log(
-      '%csrcappapp.component.ts:54 sectionId',
-      'color: #007acc;',
-      sectionId
-    );
     const index = this.sections.indexOf(sectionId);
-    console.log('%csrcappapp.component.ts:66 index', 'color: #007acc;', index);
     if (index !== -1) {
       this.scrollToSectionIndex(index);
     }
   }
 
   scrollToSectionIndex(index: number) {
-    console.log('%csrcappapp.component.ts:73 index', 'color: #007acc;', index);
     const container = this.sectionsContainer.nativeElement;
-    console.log(
-      '%csrcappapp.component.ts:74 container',
-      'color: #007acc;',
-      container
-    );
     const sectionWidth = window.innerWidth;
-    console.log(
-      '%csrcappapp.component.ts:80 sectionWidth',
-      'color: #007acc;',
-      sectionWidth
-    );
     container.scrollTo({
       left: index * sectionWidth,
       behavior: 'smooth',
     });
     this.currentSection = index;
-    console.log(
-      '%csrcappapp.component.ts:85 this.currentSection',
-      'color: #007acc;',
-      this.currentSection
-    );
   }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Navegación con teclado
+  downloadCV() {
+    const cvUrl = this.portfolioService.getCvUrl();
+    const link = document.createElement('a');
+    link.href = cvUrl;
+    link.download = 'CV_Anthony_Cajacuri_2026.pdf';
+    link.target = '_blank';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {

@@ -1,18 +1,13 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<!-- Loading Screen -->
+<app-loader></app-loader>
 
+<!-- App Container -->
 <div class="app-container">
   <!-- Navegación horizontal -->
-  <nav class="navbar">
+  <nav class="navbar" @navReveal>
     <div class="nav-container">
       <div class="nav-logo">
-        <img class="logo-ancaor" src="./assets/ancaor-logo.png" alt="">
+        <img class="logo-ancaor" src="./assets/ancaor-logo.png" alt="Ancaor Logo">
         <span class="gradient-text">Anthony</span>
       </div>
       <div class="nav-links">
@@ -20,6 +15,14 @@
         <a href="#about" class="nav-link" (click)="scrollToSection('about')">Sobre mí</a>
         <a href="#projects" class="nav-link" (click)="scrollToSection('projects')">Proyectos</a>
         <a href="#contact" class="nav-link" (click)="scrollToSection('contact')">Contacto</a>
+        <a class="nav-cv-btn" (click)="downloadCV()" id="nav-download-cv">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7,10 12,15 17,10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          CV
+        </a>
       </div>
       <div class="nav-toggle" (click)="toggleMenu()">
         <span></span>
@@ -27,49 +30,55 @@
         <span></span>
       </div>
     </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" [class.open]="isMenuOpen">
+      <a href="#home" class="mobile-link" (click)="scrollToSection('home'); toggleMenu()">Inicio</a>
+      <a href="#about" class="mobile-link" (click)="scrollToSection('about'); toggleMenu()">Sobre mí</a>
+      <a href="#projects" class="mobile-link" (click)="scrollToSection('projects'); toggleMenu()">Proyectos</a>
+      <a href="#contact" class="mobile-link" (click)="scrollToSection('contact'); toggleMenu()">Contacto</a>
+      <a class="mobile-link cv-link" (click)="downloadCV(); toggleMenu()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7,10 12,15 17,10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Descargar CV
+      </a>
+    </div>
   </nav>
 
   <!-- Contenido principal con scroll horizontal -->
   <main class="main-content">
     <div class="sections-container" #sectionsContainer>
       <!-- Sección Home -->
-      <section id="home" class="section home-section">
+      <section id="home" class="section home-section" @sectionTransition>
         <app-hero></app-hero>
       </section>
 
       <!-- Sección About -->
-      <section id="about" class="section about-section">
+      <section id="about" class="section about-section" @sectionTransition>
         <app-about></app-about>
       </section>
 
       <!-- Sección Projects -->
-      <section id="projects" class="section projects-section">
+      <section id="projects" class="section projects-section" @sectionTransition>
         <app-projects></app-projects>
       </section>
 
       <!-- Sección Contact -->
-      <section id="contact" class="section contact-section">
+      <section id="contact" class="section contact-section" @sectionTransition>
         <app-contact></app-contact>
       </section>
     </div>
   </main>
 
   <!-- Indicadores de navegación -->
-  <div class="nav-indicators">
-    <!-- <a href="#home" class="nav-link" (click)="scrollToSection('home')">Inicio</a> -->
+  <div class="nav-indicators" @indicatorReveal>
     <a class="indicator" *ngFor="let section of sections; let i = index" [class.active]="currentSection === i"
       (click)="scrollToSection(section)" href="#{{ section }}">
     </a>
   </div>
 </div>
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
 
 <router-outlet />

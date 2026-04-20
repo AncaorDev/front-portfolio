@@ -1,53 +1,63 @@
 <div class="hero-container">
   <div class="hero-content">
-    <div class="hero-text">
-      <img class="logo-ancaor" src="./assets/ancaor-logo.png" alt="">
-      <div class="hero-greeting">
+    <div class="hero-text" @heroReveal>
+      <img class="logo-ancaor anim-item" src="./assets/ancaor-logo.png" alt="Ancaor Logo">
+      <div class="hero-greeting anim-item">
         <span class="greeting-text">¡Hola! Soy</span>
       </div>
 
-      <h1 class="hero-title">
+      <h1 class="hero-title anim-item">
         <span class="gradient-text">Anthony Cajacuri</span>
       </h1>
 
-      <h2 class="hero-subtitle">
-        <span class="text-gradient">Desarrollador Full Stack</span>
+      <h2 class="hero-subtitle anim-item">
+        <span class="text-gradient typed-text">{{ typedRole }}</span>
+        <span class="typed-cursor" *ngIf="showCursor">|</span>
       </h2>
 
-      <p class="hero-description">
+      <p class="hero-description anim-item">
         Creo experiencias digitales únicas y soluciones innovadoras.
-        Especializado en tecnologías modernas y diseño centrado en el usuario.
+        Especializado en plataformas escalables con énfasis en usabilidad
+        y rendimiento óptimo usando tecnologías modernas.
       </p>
 
-      <div class="hero-stats">
-        <div class="stat">
-          <span class="stat-number">3+</span>
+      <div class="hero-stats anim-item">
+        <div class="stat" @statCounter>
+          <span class="stat-number counter-animate">9+</span>
           <span class="stat-label">Años de experiencia</span>
         </div>
-        <div class="stat">
-          <span class="stat-number">8+</span>
+        <div class="stat" @statCounter>
+          <span class="stat-number counter-animate">10+</span>
           <span class="stat-label">Proyectos completados</span>
         </div>
-        <div class="stat">
-          <span class="stat-number">5+</span>
+        <div class="stat" @statCounter>
+          <span class="stat-number counter-animate">12+</span>
           <span class="stat-label">Tecnologías dominadas</span>
         </div>
       </div>
 
-      <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary" (click)="scrollToProjects()">
+      <div class="hero-actions anim-item">
+        <a href="#projects" class="btn btn-primary btn-glow" (click)="scrollToProjects()">
           Ver Proyectos
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </a>
+        <button class="btn btn-cv" (click)="downloadCV()" id="hero-download-cv">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7,10 12,15 17,10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Descargar CV
+        </button>
         <a href="#contact" class="btn btn-secondary" (click)="scrollToContact()">
           Contactar
         </a>
       </div>
     </div>
 
-    <div class="hero-visual">
+    <div class="hero-visual" @codeWindowReveal>
       <div class="code-window">
         <div class="window-header">
           <div class="window-controls">
@@ -60,15 +70,15 @@
         <div class="window-content">
           <pre><code class="language-typescript">
 <span class="keyword">interface</span> <span class="class">Developer</span> {{ '{' }}
-  <span class="property">name</span>: <span class="string">'string'</span>; // Nombre del desarrollador
-  <span class="property">role</span>: <span class="string">'string'</span>; // Rol del desarrollador
-  <span class="property">skills</span>: <span class="string">'string[]'</span>; // Lista de habilidades
-  <span class="property">passion</span>: <span class="string">'string'</span>; // Pasión del desarrollador
+  <span class="property">name</span>: <span class="string">'string'</span>;
+  <span class="property">role</span>: <span class="string">'string'</span>;
+  <span class="property">skills</span>: <span class="string">'string[]'</span>;
+  <span class="property">passion</span>: <span class="string">'string'</span>;
 {{ '}' }}
 
 <span class="keyword">const</span> <span class="variable">me</span>: <span class="class">Developer</span> = {{ '{' }}
   <span class="property">name</span>: <span class="string">'Ancaor'</span>,
-  <span class="property">role</span>: <span class="string">'Full Stack Developer'</span>,
+  <span class="property">role</span>: <span class="string">'Fullstack Developer'</span>,
   <span class="property">skills</span>: [
     <span class="string">'Angular'</span>,
     <span class="string">'NestJs'</span>,
@@ -76,7 +86,7 @@
     <span class="string">'TypeScript'</span>,
     <span class="string">'PHP'</span>
   ],
-  <span class="property">passion</span>: <span class="string">'Crear experiencias increibles'</span>
+  <span class="property">passion</span>: <span class="string">'Crear experiencias increíbles'</span>
 {{ '}' }};
 
 <span class="keyword">export default</span> <span class="variable">me</span>;
@@ -93,5 +103,7 @@
       <div class="floating-element element-3"></div>
       <div class="floating-element element-4"></div>
     </div>
+    <!-- Grid pattern overlay -->
+    <div class="grid-overlay"></div>
   </div>
 </div>

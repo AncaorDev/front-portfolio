@@ -1,0 +1,699 @@
+/* ===========================
+   SHARED STYLES
+   =========================== */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loader-content {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+/* Progress bar */
+.progress-container {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  max-width: 80vw;
+  height: 3px;
+  background: #161b22;
+  border-radius: 4px;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #8b5cf6);
+  background-size: 200% 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  animation: gradientMove 2s linear infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+/* Particles */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(59, 130, 246, 0.12);
+  border-radius: 50%;
+  animation: floatParticle linear infinite;
+}
+
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ===========================
+   VARIANT 1: TERMINAL
+   =========================== */
+.terminal {
+  width: 480px;
+  max-width: 90vw;
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(59, 130, 246, 0.05);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #161b22;
+  border-bottom: 1px solid #21262d;
+}
+
+.terminal-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background: #ff5f56;
+}
+.dot.yellow {
+  background: #ffbd2e;
+}
+.dot.green {
+  background: #27ca3f;
+}
+
+.terminal-title {
+  color: #8b949e;
+  font-size: 0.75rem;
+  font-family: "Fira Code", "Consolas", monospace;
+}
+
+.terminal-body {
+  padding: 1.25rem;
+  min-height: 200px;
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.line {
+  opacity: 0;
+  animation: lineAppear 0.3s ease forwards;
+}
+
+.prompt {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.prefix {
+  color: #3b82f6;
+}
+
+.command {
+  color: #e6edf3;
+}
+
+.success {
+  color: #10b981;
+}
+
+.info {
+  color: #8b949e;
+}
+
+.warning {
+  color: #f59e0b;
+}
+
+.highlight {
+  color: #bd93f9;
+}
+
+.cursor-blink {
+  color: #3b82f6;
+  animation: blink 0.8s infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes lineAppear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===========================
+   VARIANT 2: MATRIX
+   =========================== */
+.matrix-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.matrix-column {
+  position: absolute;
+  top: -100%;
+  display: flex;
+  flex-direction: column;
+  animation: matrixFall linear infinite;
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.matrix-char {
+  color: rgba(16, 185, 129, 0.4);
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
+  transition: color 0.1s;
+}
+
+.matrix-char.highlight {
+  color: rgba(16, 185, 129, 1);
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.8),
+    0 0 20px rgba(16, 185, 129, 0.4);
+}
+
+@keyframes matrixFall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh);
+    opacity: 0.3;
+  }
+}
+
+.matrix-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.matrix-logo {
+  font-family: "Fira Code", monospace;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.matrix-bracket {
+  color: #10b981;
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+}
+
+.matrix-name {
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.matrix-subtitle {
+  color: #10b981;
+  font-family: "Fira Code", monospace;
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  opacity: 0.7;
+  animation: blink 1.5s infinite;
+}
+
+/* ===========================
+   VARIANT 3: GLITCH
+   =========================== */
+.glitch-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.glitch-text {
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 4rem;
+  font-weight: 900;
+  color: white;
+  position: relative;
+  animation: glitchSkew 2s infinite linear alternate-reverse;
+  letter-spacing: 0.1em;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  color: #ff00ff;
+  animation: glitchBefore 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  transform: translateX(-3px);
+}
+
+.glitch-text::after {
+  color: #00ffff;
+  animation: glitchAfter 2s infinite linear alternate-reverse;
+  clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+  transform: translateX(3px);
+}
+
+@keyframes glitchSkew {
+  0%,
+  95% {
+    transform: skew(0deg);
+  }
+  96% {
+    transform: skew(2deg);
+  }
+  97% {
+    transform: skew(-1deg);
+  }
+  98% {
+    transform: skew(3deg);
+  }
+  99% {
+    transform: skew(-2deg);
+  }
+  100% {
+    transform: skew(0deg);
+  }
+}
+
+@keyframes glitchBefore {
+  0%,
+  92% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translateX(-3px);
+  }
+  93% {
+    clip-path: polygon(0 15%, 100% 15%, 100% 30%, 0 30%);
+    transform: translateX(5px);
+  }
+  94% {
+    clip-path: polygon(0 50%, 100% 50%, 100% 55%, 0 55%);
+    transform: translateX(-8px);
+  }
+  95% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translateX(2px);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    transform: translateX(-3px);
+  }
+}
+
+@keyframes glitchAfter {
+  0%,
+  90% {
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    transform: translateX(3px);
+  }
+  91% {
+    clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
+    transform: translateX(-6px);
+  }
+  93% {
+    clip-path: polygon(0 85%, 100% 85%, 100% 95%, 0 95%);
+    transform: translateX(4px);
+  }
+  95% {
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    transform: translateX(-2px);
+  }
+  100% {
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    transform: translateX(3px);
+  }
+}
+
+.glitch-subtitle {
+  margin-top: 2rem;
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  color: #10b981;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.glitch-line {
+  opacity: 0;
+  animation: glitchLineAppear 0.4s ease forwards;
+  text-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+}
+
+.glitch-line:nth-child(1) { animation-delay: 0.4s; }
+.glitch-line:nth-child(2) { animation-delay: 1s; }
+.glitch-line:nth-child(3) { animation-delay: 1.6s; }
+.glitch-line:nth-child(4) { animation-delay: 2.2s; }
+.glitch-line:nth-child(5) { animation-delay: 2.6s; }
+
+@keyframes glitchLineAppear {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 0.8;
+    transform: translateX(0);
+  }
+}
+
+.glitch-bar {
+  margin-top: 1.5rem;
+  width: 300px;
+  max-width: 80vw;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.glitch-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff00ff, #00ffff);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+.scan-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 255, 0.15),
+    transparent
+  );
+  animation: scanLine 3s linear infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@keyframes scanLine {
+  0% {
+    top: -4px;
+  }
+  100% {
+    top: 100vh;
+  }
+}
+
+/* ===========================
+   VARIANT 4: GEOMETRIC
+   =========================== */
+.geometric-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.geo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 5;
+}
+
+.geo-shape {
+  width: 140px;
+  height: 140px;
+  position: relative;
+  margin: 0 auto 2rem;
+}
+
+.geo-ring {
+  position: absolute;
+  border: 2px solid transparent;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ring-1 {
+  width: 140px;
+  height: 140px;
+  border-top-color: #3b82f6;
+  border-right-color: #3b82f6;
+  animation: geoSpin1 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+
+.ring-2 {
+  width: 100px;
+  height: 100px;
+  border-bottom-color: #10b981;
+  border-left-color: #10b981;
+  animation: geoSpin2 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.ring-3 {
+  width: 60px;
+  height: 60px;
+  border-top-color: #8b5cf6;
+  border-left-color: #8b5cf6;
+  animation: geoSpin3 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+  box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+}
+
+.geo-dot {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  animation: geoPulse 1s ease-in-out infinite;
+}
+
+@keyframes geoSpin1 {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+    border-radius: 50%;
+  }
+  25% {
+    border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg);
+    border-radius: 50%;
+  }
+  75% {
+    border-radius: 60% 40% 40% 60% / 40% 60% 40% 60%;
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+    border-radius: 50%;
+  }
+}
+
+@keyframes geoSpin2 {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+@keyframes geoSpin3 {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg) scale(1);
+  }
+}
+
+@keyframes geoPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.6;
+  }
+}
+
+.geo-text {
+  font-family: "Inter", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  margin-bottom: 1rem;
+}
+
+.geo-letter {
+  display: inline-block;
+  color: #fff;
+  opacity: 0;
+  animation: geoLetterIn 0.5s ease forwards;
+}
+
+@keyframes geoLetterIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) rotateX(90deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+.geo-status {
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+  color: #8b949e;
+  animation: geoBlink 1.5s ease infinite;
+}
+
+@keyframes geoBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .glitch-text {
+    font-size: 2.5rem;
+  }
+
+  .matrix-logo {
+    font-size: 1.8rem;
+  }
+
+  .geo-text {
+    font-size: 1.5rem;
+  }
+
+  .terminal {
+    max-width: 95vw;
+  }
+
+  .terminal-body {
+    padding: 1rem;
+    min-height: 160px;
+    font-size: 0.7rem;
+  }
+}

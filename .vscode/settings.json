@@ -18,7 +18,7 @@
     "strings": false
   },
   "editor.parameterHints.enabled": true,
-  "editor.hover.enabled": true,
+  "editor.hover.enabled": "on",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit"

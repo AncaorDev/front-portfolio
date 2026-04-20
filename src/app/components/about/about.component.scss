@@ -2,7 +2,7 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 2rem;
   overflow-y: auto;
@@ -14,13 +14,13 @@
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  height: inherit;
+  padding-bottom: 4rem;
 }
 
 .about-header {
   margin-top: 4rem;
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .section-title {
@@ -55,7 +55,7 @@
 }
 
 .about-description p {
-  font-size: 1.125rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
   line-height: 1.7;
   margin: 0;
@@ -64,14 +64,14 @@
 .about-details {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .detail-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 0.875rem 1rem;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 0.5rem;
@@ -80,7 +80,7 @@
 
 .detail-item:hover {
   border-color: var(--accent-color);
-  transform: translateY(-2px);
+  transform: translateX(4px);
 }
 
 .detail-label {
@@ -92,10 +92,11 @@
   color: var(--text-secondary);
 }
 
+/* Skills */
 .skills-section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .skills-title {
@@ -108,17 +109,17 @@
 .skills-categories {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .skill-category {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .category-title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--accent-color);
   margin: 0;
@@ -133,12 +134,15 @@
 .skill-tag {
   background: var(--card-bg);
   color: var(--text-secondary);
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.875rem;
   border-radius: 2rem;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   border: 1px solid var(--border-color);
   transition: all 0.3s ease;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .skill-tag:hover {
@@ -148,6 +152,22 @@
   transform: translateY(-2px);
 }
 
+.skill-years {
+  font-size: 0.65rem;
+  font-weight: 700;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-color);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.75rem;
+  line-height: 1;
+}
+
+.skill-tag:hover .skill-years {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Experience */
 .experience-section {
   display: flex;
   flex-direction: column;
@@ -165,7 +185,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .timeline::before {
@@ -175,7 +195,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: var(--border-color);
+  background: linear-gradient(to bottom, var(--accent-color), var(--border-color));
 }
 
 .timeline-item {
@@ -195,6 +215,18 @@
   border-radius: 50%;
   border: 3px solid var(--background);
   z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.timeline-marker.active {
+  background: #10b981;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
 }
 
 .timeline-content {
@@ -215,12 +247,12 @@
 .timeline-header {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
 }
 
 .job-title {
-  font-size: 1.125rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
@@ -233,14 +265,129 @@
 }
 
 .period {
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.current-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  letter-spacing: 0.02em;
 }
 
 .job-description {
   color: var(--text-secondary);
   line-height: 1.6;
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+}
+
+.job-achievements {
+  margin-bottom: 0.75rem;
+}
+
+.achievements-list {
+  list-style: none;
+  padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.achievements-list li {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  position: relative;
+  padding-left: 1.25rem;
+  line-height: 1.5;
+}
+
+.achievements-list li::before {
+  content: "▹";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.job-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tech-pill {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--accent-color);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  font-weight: 500;
+}
+
+/* Skeleton Loading */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--border-color) 25%,
+    rgba(59, 130, 246, 0.1) 50%,
+    var(--border-color) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 0.5rem;
+}
+
+.skeleton-title {
+  height: 1.25rem;
+  width: 40%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-tag {
+  height: 2rem;
+  width: 5rem;
+  border-radius: 2rem;
+}
+
+.skeleton-card {
+  padding: 1.5rem;
+}
+
+.skeleton-heading {
+  height: 1.25rem;
+  width: 60%;
+  margin-bottom: 1rem;
+}
+
+.skeleton-text {
+  height: 0.875rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.skeleton-text-short {
+  height: 0.875rem;
+  width: 40%;
+}
+
+.skeleton-group {
+  padding: 1rem;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
 /* Responsive */
@@ -273,13 +420,13 @@
   }
 
   .about-description p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .detail-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.35rem;
   }
 
   .skill-tags {
@@ -287,8 +434,8 @@
   }
 
   .skill-tag {
-    font-size: 0.75rem;
-    padding: 0.375rem 0.75rem;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
   }
 
   .timeline-item {
@@ -298,5 +445,9 @@
 
   .timeline-content {
     padding: 1rem;
+  }
+
+  .job-title {
+    font-size: 1rem;
   }
 }
