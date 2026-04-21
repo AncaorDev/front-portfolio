@@ -99,4 +99,8 @@ export class PortfolioService {
   getCvUrl(): string {
     return 'assets/CV Anthony Cajacuri - 2026 v2.pdf';
   }
+
+  getCvUrlEn(): string {
+    return 'assets/CV Anthony Cajacuri - 2026 v2.pdf';
+  }
 }

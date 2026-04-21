@@ -150,6 +150,7 @@
   color: white;
   border-color: var(--accent-color);
   transform: translateY(-2px);
+  box-shadow: var(--window-shadow);
 }
 
 .skill-years {
@@ -241,7 +242,7 @@
 .timeline-content:hover {
   border-color: var(--accent-color);
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+  box-shadow: var(--window-shadow);
 }
 
 .timeline-header {

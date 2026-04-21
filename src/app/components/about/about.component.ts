@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { PortfolioService } from '../../services/portfolio.service';
 import { Experience, SkillCategory } from '../../models/portfolio.models';
 
+import { TranslatePipe } from '../../pipes/translate.pipe';
+
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
 })

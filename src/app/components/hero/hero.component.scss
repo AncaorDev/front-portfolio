@@ -147,10 +147,12 @@
 
 .code-window {
   background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--window-shadow);
   max-width: 500px;
   width: 100%;
 }
@@ -212,19 +214,19 @@
 
 /* Syntax highlighting */
 .keyword {
-  color: #ff79c6;
+  color: var(--syntax-keyword);
 }
 .class {
-  color: #8be9fd;
+  color: var(--syntax-class);
 }
 .property {
-  color: #f8f8f2;
+  color: var(--syntax-property);
 }
 .string {
-  color: #f1fa8c;
+  color: var(--syntax-string);
 }
 .variable {
-  color: #bd93f9;
+  color: var(--syntax-variable);
 }
 
 .hero-background {
@@ -406,8 +408,8 @@
   width: 100%;
   height: 100%;
   background-image:
-    linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(59, 130, 246, var(--grid-opacity)) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, var(--grid-opacity)) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;

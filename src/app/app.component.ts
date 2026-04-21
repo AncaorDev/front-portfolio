@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -6,7 +6,9 @@ import {
   HostListener,
   OnInit,
   ViewChild,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -17,6 +19,9 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { SeoService } from './services/seo.service';
 import { PortfolioService } from './services/portfolio.service';
+import { ThemeService } from './services/theme.service';
+import { TranslationService } from './services/translation.service';
+import { TranslatePipe } from './pipes/translate.pipe';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +34,7 @@ import { PortfolioService } from './services/portfolio.service';
     ProjectsComponent,
     ContactComponent,
     LoaderComponent,
+    TranslatePipe
   ],
   animations: [
     trigger('sectionTransition', [
@@ -63,7 +69,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private seoService: SeoService,
     private portfolioService: PortfolioService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public themeService: ThemeService,
+    public translationService: TranslationService
   ) {}
 
   ngOnInit() {
@@ -80,6 +89,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   setupScrollListener() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     const options = {
       root: this.scrollContainer.nativeElement,
       threshold: 0.5 // trigger when 50% of the section is visible
@@ -104,6 +117,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   updateCurrentSection() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
     // Left as fallback for resize if needed
     const container = this.scrollContainer.nativeElement;
     const scrollLeft = container.scrollLeft;
@@ -113,6 +128,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSection(sectionId: string) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const index = this.sections.indexOf(sectionId);
     if (index !== -1) {
       this.scrollToSectionIndex(index);
@@ -120,6 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSectionIndex(index: number) {
+    if (!isPlatformBrowser(this.platformId)) return;
     const container = this.scrollContainer.nativeElement;
     const sectionWidth = window.innerWidth;
     container.scrollTo({
@@ -134,10 +151,16 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   downloadCV() {
-    const cvUrl = this.portfolioService.getCvUrl();
+    // Determine which CV URL to use based on current language
+    const cvUrl = this.translationService.currentLang === 'en' ? 
+                 this.portfolioService.getCvUrlEn() : 
+                 this.portfolioService.getCvUrl();
+                 
     const link = document.createElement('a');
     link.href = cvUrl;
-    link.download = 'CV_Anthony_Cajacuri_2026.pdf';
+    link.download = this.translationService.currentLang === 'en' ? 
+                   'CV_Anthony_Cajacuri_2026_EN.pdf' :
+                   'CV_Anthony_Cajacuri_2026.pdf';
     link.target = '_blank';
     document.body.appendChild(link);
     link.click();

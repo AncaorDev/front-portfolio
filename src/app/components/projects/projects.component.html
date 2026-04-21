@@ -2,10 +2,10 @@
   <div class="projects-content">
     <div class="projects-header">
       <h2 class="section-title">
-        <span class="gradient-text">Proyectos</span>
+        <span class="gradient-text">{{ 'projects.title' | translate }}</span>
       </h2>
       <p class="section-subtitle">
-        Algunos de mis trabajos más destacados
+        {{ 'projects.subtitle' | translate }}
       </p>
     </div>
 
@@ -18,7 +18,7 @@
         (click)="filterProjects(filter.key)"
         [id]="'filter-' + filter.key"
       >
-        {{ filter.label }}
+        {{ 'projects.filter.' + filter.key | translate }}
       </button>
     </div>
 
@@ -42,12 +42,16 @@
     <!-- Projects grid -->
     <div class="projects-grid" *ngIf="!isLoading">
       <div class="project-card" *ngFor="let project of filteredProjects">
-        <div class="project-image-placeholder">
+          <div class="project-image-placeholder">
           <div class="project-icon-container">
             <span class="project-category-badge">{{ project.category }}</span>
             <span class="project-year">{{ project.year }}</span>
           </div>
-          <div class="project-company" *ngIf="project.company">
+          <div class="project-company" *ngIf="project.company" title="Empresa / Cliente">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+            </svg>
             {{ project.company }}
           </div>
         </div>
@@ -55,7 +59,7 @@
         <div class="project-content">
           <div class="project-content-header">
             <h3 class="project-title">{{ project.title }}</h3>
-            <span class="featured-badge" *ngIf="project.featured">⭐ Destacado</span>
+            <span class="featured-badge" *ngIf="project.featured">{{ 'projects.featured' | translate }}</span>
           </div>
           <p class="project-description">{{ project.description }}</p>
 
@@ -74,13 +78,13 @@
 
     <!-- Empty state -->
     <div class="empty-state" *ngIf="!isLoading && filteredProjects.length === 0">
-      <p>No hay proyectos en esta categoría.</p>
+      <p>{{ 'projects.empty' | translate }}</p>
     </div>
 
     <div class="projects-cta">
-      <p class="cta-text">¿Te gusta lo que ves? ¡Trabajemos juntos!</p>
+      <p class="cta-text">{{ 'projects.cta.text' | translate }}</p>
       <a href="#contact" class="btn btn-primary" (click)="scrollToContact()">
-        Iniciar Proyecto
+        {{ 'projects.cta.btn' | translate }}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>

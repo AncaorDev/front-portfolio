@@ -2,55 +2,43 @@
   <div class="about-content">
     <div class="about-header">
       <h2 class="section-title">
-        <span class="gradient-text">Sobre mí</span>
+        <span class="gradient-text">{{ 'about.title' | translate }}</span>
       </h2>
       <p class="section-subtitle">
-        Desarrollador apasionado por crear soluciones innovadoras
+        {{ 'about.subtitle' | translate }}
       </p>
     </div>
 
     <div class="about-grid">
       <div class="about-text">
         <div class="about-description">
-          <p>
-            Soy un desarrollador Fullstack con más de 9 años de experiencia creando
-            aplicaciones web modernas y escalables. Me enfoco en la innovación,
-            aprendizaje continuo y trabajo en equipo.
-          </p>
-          <p>
-            Me especializo en desarrollar plataformas escalables con énfasis en
-            usabilidad y rendimiento óptimo usando tecnologías modernas. He trabajado
-            con clientes como BBVA, Pacasmayo, y corporaciones educativas.
-          </p>
-          <p>
-            Mi experiencia abarca desde el liderazgo técnico de equipos de desarrollo
-            hasta migraciones exitosas a la nube y optimización arquitectónica
-            de sistemas complejos.
-          </p>
+          <p>{{ 'about.p1' | translate }}</p>
+          <p>{{ 'about.p2' | translate }}</p>
+          <p>{{ 'about.p3' | translate }}</p>
         </div>
 
         <div class="about-details">
           <div class="detail-item">
-            <span class="detail-label">Ubicación:</span>
-            <span class="detail-value">Tarma, Junín - Perú</span>
+            <span class="detail-label">{{ 'about.loc.label' | translate }}</span>
+            <span class="detail-value">{{ 'about.loc.val' | translate }}</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Experiencia:</span>
-            <span class="detail-value">9+ años</span>
+            <span class="detail-label">{{ 'about.exp.label' | translate }}</span>
+            <span class="detail-value">{{ 'about.exp.val' | translate }}</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Disponibilidad:</span>
-            <span class="detail-value">Disponible para proyectos</span>
+            <span class="detail-label">{{ 'about.disp.label' | translate }}</span>
+            <span class="detail-value">{{ 'about.disp.val' | translate }}</span>
           </div>
           <div class="detail-item">
-            <span class="detail-label">Educación:</span>
-            <span class="detail-value">Bach. Ingeniería de Sistemas</span>
+            <span class="detail-label">{{ 'about.edu.label' | translate }}</span>
+            <span class="detail-value">{{ 'about.edu.val' | translate }}</span>
           </div>
         </div>
       </div>
 
       <div class="skills-section">
-        <h3 class="skills-title">Habilidades Técnicas</h3>
+        <h3 class="skills-title">{{ 'about.skills.title' | translate }}</h3>
 
         <!-- Loading skeleton -->
         <div class="skills-categories" *ngIf="isLoadingSkills">
@@ -82,7 +70,7 @@
     </div>
 
     <div class="experience-section">
-      <h3 class="experience-title">Experiencia Profesional</h3>
+      <h3 class="experience-title">{{ 'about.exp.title' | translate }}</h3>
 
       <!-- Loading skeleton -->
       <div class="timeline" *ngIf="isLoadingExperiences">

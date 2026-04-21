@@ -83,6 +83,7 @@
 .contact-method:hover {
   border-color: var(--accent-color);
   transform: translateY(-2px);
+  box-shadow: var(--window-shadow);
 }
 
 .method-icon {
@@ -157,9 +158,12 @@
 
 .contact-form {
   background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
   border-radius: 1rem;
   padding: 2rem;
+  box-shadow: var(--window-shadow);
 }
 
 .form-group {
@@ -226,7 +230,7 @@
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: var(--window-shadow);
 }
 
 .btn-primary:disabled {

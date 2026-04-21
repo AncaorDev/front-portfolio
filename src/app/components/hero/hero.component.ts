@@ -18,10 +18,12 @@ import {
 } from '@angular/animations';
 import { PortfolioService } from '../../services/portfolio.service';
 
+import { TranslatePipe } from '../../pipes/translate.pipe';
+
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   animations: [
     trigger('heroReveal', [
       transition(':enter', [

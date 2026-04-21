@@ -88,7 +88,7 @@
 .project-card:hover {
   transform: translateY(-6px);
   border-color: var(--accent-color);
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.12);
+  box-shadow: var(--window-shadow);
 }
 
 /* Image placeholder (replaces actual images) */
@@ -131,9 +131,20 @@
 }
 
 .project-company {
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   font-weight: 500;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+
+  svg {
+    opacity: 0.7;
+  }
 }
 
 /* Content */
