@@ -8,7 +8,7 @@ import {
   transition,
 } from '@angular/animations';
 
-type LoaderVariant = 'terminal' | 'matrix' | 'glitch' | 'geometric';
+type LoaderVariant = 'terminal' | 'wizard' | 'pacman' | 'geometric';
 
 @Component({
   selector: 'app-loader',
@@ -55,48 +55,53 @@ type LoaderVariant = 'terminal' | 'matrix' | 'glitch' | 'geometric';
         </div>
       </div>
 
-      <!-- Variant 2: Matrix Code Rain -->
-      <div class="loader-content matrix-content" *ngIf="variant === 'matrix'">
-        <div class="matrix-rain">
-          <div
-            class="matrix-column"
-            *ngFor="let col of matrixColumns"
-            [style]="col.style"
-          >
-            <span
-              class="matrix-char"
-              *ngFor="let char of col.chars"
-              [class.highlight]="char.highlight"
-              >{{ char.value }}</span
-            >
+      <!-- Variant 2: Wizard -->
+      <div class="loader-content wizard-content" *ngIf="variant === 'wizard'">
+        <div class="scene">
+          <div class="objects">
+            <div class="square"></div>
+            <div class="circle"></div>
+            <div class="triangle"></div>
+          </div>
+          <div class="wizard">
+            <div class="body"></div>
+            <div class="right-arm">
+              <div class="right-hand"></div>
+            </div>
+            <div class="left-arm">
+              <div class="left-hand"></div>
+            </div>
+            <div class="head">
+              <div class="beard"></div>
+              <div class="face">
+                <div class="adds"></div>
+              </div>
+              <div class="hat">
+                <div class="hat-of-the-hat"></div>
+                <div class="four-point-star --first"></div>
+                <div class="four-point-star --second"></div>
+                <div class="four-point-star --third"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="matrix-center">
-          <div class="matrix-logo">
-            <span class="matrix-bracket">&lt;</span>
-            <span class="matrix-name">ANCAOR</span>
-            <span class="matrix-bracket">/&gt;</span>
-          </div>
-          <div class="matrix-subtitle">initializing...</div>
-        </div>
+        <div class="progress"></div>
+        <div class="noise"></div>
       </div>
 
-      <!-- Variant 3: Glitch Text -->
-      <div class="loader-content glitch-content" *ngIf="variant === 'glitch'">
-        <div class="glitch-container">
-          <div class="glitch-text" data-text="ANCAOR.DEV">ANCAOR.DEV</div>
-          <div class="glitch-subtitle">
-            <span class="glitch-line" *ngFor="let item of glitchLines">{{
-              item
-            }}</span>
+      <!-- Variant 3: Pacman -->
+      <div class="loader-content pacman-content" *ngIf="variant === 'pacman'">
+        <div class="pacman-container">
+          <div class="pacman-wrapper">
+            <div class="pacman">
+              <div class="pacman-top"></div>
+              <div class="pacman-bottom"></div>
+            </div>
+            <div class="pacman-dots">
+              <div class="pacman-dot" *ngFor="let i of [1,2,3,4]"></div>
+            </div>
           </div>
-          <div class="glitch-bar">
-            <div
-              class="glitch-bar-fill"
-              [style.width.%]="progress"
-            ></div>
-          </div>
-          <div class="scan-line"></div>
+          <div class="pacman-text">Eating bugs...</div>
         </div>
       </div>
 
@@ -157,19 +162,6 @@ export class LoaderComponent implements OnInit, OnDestroy {
     { text: '⚡ Portfolio ready!', type: 'highlight' },
   ];
 
-  // Matrix variant
-  matrixColumns: { style: string; chars: { value: string; highlight: boolean }[] }[] = [];
-
-  // Glitch variant
-  glitchLines: string[] = [];
-  private glitchMessages = [
-    '> Initializing system...',
-    '> Loading modules...',
-    '> Connecting services...',
-    '> Compiling assets...',
-    '> System ready.',
-  ];
-
   // Geometric variant
   geoLetters: string[] = 'ANCAOR'.split('');
   geoStatus = 'Loading...';
@@ -200,8 +192,8 @@ export class LoaderComponent implements OnInit, OnDestroy {
     // Pick random variant
     const variants: LoaderVariant[] = [
       'terminal',
-      'matrix',
-      'glitch',
+      'wizard',
+      'pacman',
       'geometric',
     ];
     this.variant = variants[Math.floor(Math.random() * variants.length)];
@@ -232,15 +224,10 @@ export class LoaderComponent implements OnInit, OnDestroy {
       case 'terminal':
         this.runTerminal(totalDuration);
         break;
-      case 'matrix':
-        this.runMatrix(totalDuration);
-        break;
-      case 'glitch':
-        this.runGlitch(totalDuration);
-        break;
       case 'geometric':
         this.runGeometric(totalDuration);
         break;
+      // Wizard and Pacman just rely on CSS animations entirely
     }
 
     // Fade out
@@ -263,59 +250,6 @@ export class LoaderComponent implements OnInit, OnDestroy {
     this.terminalLines.forEach((line, index) => {
       const timer = setTimeout(() => {
         this.visibleLines.push(line);
-      }, index * lineDelay);
-      this.timers.push(timer);
-    });
-  }
-
-  // === Matrix ===
-  private runMatrix(duration: number): void {
-    const chars =
-      'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF<>/{}[]();.:';
-    const numCols = 25;
-
-    for (let i = 0; i < numCols; i++) {
-      const colChars: { value: string; highlight: boolean }[] = [];
-      const numChars = Math.floor(Math.random() * 12) + 6;
-      for (let j = 0; j < numChars; j++) {
-        colChars.push({
-          value: chars.charAt(Math.floor(Math.random() * chars.length)),
-          highlight: j === numChars - 1,
-        });
-      }
-      const left = (i / numCols) * 100;
-      const animDuration = Math.random() * 3 + 2;
-      const animDelay = Math.random() * 2;
-      this.matrixColumns.push({
-        style: `left: ${left}%; animation-duration: ${animDuration}s; animation-delay: ${animDelay}s;`,
-        chars: colChars,
-      });
-    }
-
-    // Randomize chars periodically
-    const matrixInterval = setInterval(() => {
-      this.matrixColumns.forEach((col) => {
-        const randIdx = Math.floor(Math.random() * col.chars.length);
-        col.chars[randIdx].value = chars.charAt(
-          Math.floor(Math.random() * chars.length)
-        );
-      });
-    }, 100);
-    this.intervals.push(matrixInterval);
-
-    const clearTimer = setTimeout(
-      () => clearInterval(matrixInterval),
-      duration
-    );
-    this.timers.push(clearTimer);
-  }
-
-  // === Glitch ===
-  private runGlitch(duration: number): void {
-    const lineDelay = duration / this.glitchMessages.length;
-    this.glitchMessages.forEach((msg, index) => {
-      const timer = setTimeout(() => {
-        this.glitchLines.push(msg);
       }, index * lineDelay);
       this.timers.push(timer);
     });

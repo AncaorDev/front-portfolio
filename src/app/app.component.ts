@@ -6,6 +6,7 @@ import {
   HostListener,
   OnInit,
   ViewChild,
+  ChangeDetectorRef
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
@@ -53,7 +54,7 @@ import { PortfolioService } from './services/portfolio.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('sectionsContainer') sectionsContainer!: ElementRef;
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
   currentSection = 0;
   sections = ['home', 'about', 'projects', 'contact'];
@@ -61,7 +62,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     private seoService: SeoService,
-    private portfolioService: PortfolioService
+    private portfolioService: PortfolioService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -78,17 +80,36 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   setupScrollListener() {
-    const container = this.sectionsContainer.nativeElement;
-    container.addEventListener('scroll', () => {
-      this.updateCurrentSection();
+    const options = {
+      root: this.scrollContainer.nativeElement,
+      threshold: 0.5 // trigger when 50% of the section is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const index = this.sections.indexOf(entry.target.id);
+          if (index !== -1 && this.currentSection !== index) {
+            this.currentSection = index;
+            this.cdr.detectChanges(); // force view update
+          }
+        }
+      });
+    }, options);
+
+    this.sections.forEach(sectionId => {
+      const el = document.getElementById(sectionId);
+      if (el) observer.observe(el);
     });
   }
 
   updateCurrentSection() {
-    const container = this.sectionsContainer.nativeElement;
+    // Left as fallback for resize if needed
+    const container = this.scrollContainer.nativeElement;
     const scrollLeft = container.scrollLeft;
-    const sectionWidth = window.innerWidth;
+    const sectionWidth = container.clientWidth;
     this.currentSection = Math.round(scrollLeft / sectionWidth);
+    this.cdr.detectChanges();
   }
 
   scrollToSection(sectionId: string) {
@@ -99,7 +120,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   scrollToSectionIndex(index: number) {
-    const container = this.sectionsContainer.nativeElement;
+    const container = this.scrollContainer.nativeElement;
     const sectionWidth = window.innerWidth;
     container.scrollTo({
       left: index * sectionWidth,
