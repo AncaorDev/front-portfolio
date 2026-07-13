@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:front-ancaor": "node dist/front-ancaor/server/server.mjs",
-    "deploy:prod": "gcloud app deploy app.yaml --version=20240224t144814 --project=ancaor-tec --account=ancaor.data@gmail.com"
+    "deploy:appengine": "gcloud app deploy app.yaml --project=ancaor-tec --account=ancaor.data@gmail.com"
   },
   "private": true,
   "dependencies": {

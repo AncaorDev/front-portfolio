@@ -1,9 +1,9 @@
 name: Deploy to App Engine
 
+# Manual only — Amplify Hosting is the primary deploy path.
+# Use this workflow for rollback or emergency App Engine deploys.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:

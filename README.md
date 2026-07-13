@@ -22,7 +22,8 @@ Portfolio personal de **Anthony Cajacuri**, desarrollador Full Stack especializa
 - **Build Tool**: Angular CLI
 - **Server**: Node.js, Express
 - **SEO**: Meta tags, JSON-LD, Sitemap, Robots.txt
-- **Deployment**: Google Cloud Platform
+- **Deployment**: AWS Amplify Hosting
+
 
 ## 📁 Estructura del Proyecto
 
@@ -75,7 +76,7 @@ front-ancaor/
    ```bash
    npm run start:dev
    ```
-   Navega a `http://localhost:4200/`
+   Navega a `http://localhost:4100/`
 
 ### Scripts Disponibles
 
@@ -133,18 +134,36 @@ ngOnInit() {
 - Estructura semántica HTML
 - ARIA labels donde sea necesario
 
-## 🚀 Despliegue
+## Despliegue
 
-### Google Cloud Platform
+### AWS Amplify Hosting (estático + prerender)
 
-```bash
-npm run deploy:prod
-```
+El sitio se publica como estáticos prerenderizados. Amplify construye con [`amplify.yml`](amplify.yml) y sirve `dist/front-ancaor/browser` desde el CDN.
 
-### Otros Proveedores
+#### 1. Conectar el repositorio
 
-1. Build del proyecto: `npm run build`
-2. Subir contenido de `dist/front-ancaor/browser/` a tu servidor web
+1. En la [consola de Amplify](https://console.aws.amazon.com/amplify/), elige **Host web app**.
+2. Conecta el repositorio de GitHub y la rama `main`.
+3. Confirma que detecta `amplify.yml` (plataforma de hosting estático, no SSR).
+4. Guarda y deja que termine el primer build.
+
+#### 2. Rewrite SPA
+
+En **Hosting → Rewrites and redirects**, abre el editor JSON y pega el contenido de [`amplify-redirects.json`](amplify-redirects.json). Esa regla reescribe rutas sin extensión de archivo a `/index.html` (status `200`).
+
+#### 3. Dominio y subdominios
+
+1. Ve a **Hosting → Custom domains** y añade `ancaor.com`.
+2. Asocia el apex (`ancaor.com`) y `www` a la rama `main` (o redirige `www` → apex).
+3. Añade más subdominios si los necesitas (por ejemplo `staging` → rama `staging`).
+4. En tu DNS (Route 53 u otro proveedor), crea los registros CNAME / A / ALIAS que indique Amplify.
+5. Espera a que el certificado HTTPS gestionado por Amplify quede activo.
+
+Cada push a la rama conectada dispara un nuevo deploy automático.
+
+### Rollback / App Engine (manual)
+
+`app.yaml` y el workflow de GitHub Actions se mantienen solo como respaldo. **No se ejecutan en push**: hay que lanzarlos a mano desde Actions → **Deploy to App Engine** → **Run workflow**, o localmente con `npm run deploy:appengine`.
 
 ## 📊 Monitoreo y Analytics
 
