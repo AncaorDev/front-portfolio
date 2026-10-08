@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, concat, delay, distinctUntilChanged, filter, map, of, shareReplay, tap, timeout } from 'rxjs';
+import { Observable, catchError, concat, delay, distinctUntilChanged, filter, map, of, shareReplay, switchMap, tap, timeout } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   Project,
@@ -52,7 +52,7 @@ export class PortfolioService {
   private remoteCvUrl: string | null = null;
 
   /**
-   * Contenido editado desde app.ancaor.com (GET /portfolio/public); si el API falla o aún no tiene
+   * Contenido editado desde app.ancaor.com. Lee la revisión sin caché y luego GET /portfolio/public?v=<revision>. Si el API falla o aún no tiene
    * perfil, los datos incluidos en el sitio. El sitio se publica prerenderado: el navegador hidrata
    * con el contenido del render y luego lo actualiza con el del API, así las ediciones se ven sin
    * volver a desplegar y la hidratación nunca recibe datos distintos a los del HTML.
@@ -117,11 +117,31 @@ export class PortfolioService {
 
   /** The API content, or `fallback` when it fails, times out or has no profile yet. */
   private fetchApi<T extends PortfolioContent | null>(fallback: T): Observable<PortfolioContent | T> {
-    return this.http.get<PublicPortfolio>(`${this.apiUrl}/portfolio/public`, { transferCache: false }).pipe(
-      timeout(API_TIMEOUT_MS),
-      map(toPortfolioContent),
-      map(content => (content.profile ? content : fallback)),
-      catchError(() => of(fallback))
+    return this.publicRevision().pipe(
+      switchMap(revision => this.http.get<PublicPortfolio>(`${this.apiUrl}/portfolio/public`, {
+        params: { v: String(revision) },
+        transferCache: false
+      }).pipe(
+        timeout(API_TIMEOUT_MS),
+        map(toPortfolioContent),
+        map(content => (content.profile ? content : fallback)),
+        catchError(() => of(fallback))
+      ))
+    );
+  }
+
+  /** Uncached generation counter. A failure keeps `v=0` and still tries the content request. */
+  private publicRevision(): Observable<number> {
+    return this.http.get<{ revision?: unknown }>(`${this.apiUrl}/portfolio/public/revision`, {
+      params: { t: Date.now().toString() },
+      transferCache: false
+    }).pipe(
+      timeout(2000),
+      map(body => {
+        const revision = Number(body?.revision);
+        return Number.isSafeInteger(revision) && revision >= 0 ? revision : 0;
+      }),
+      catchError(() => of(0))
     );
   }
 }
