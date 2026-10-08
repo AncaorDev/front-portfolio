@@ -14,6 +14,7 @@ type LoaderVariant = 'terminal' | 'wizard' | 'pacman' | 'geometric';
   selector: 'app-loader',
   standalone: true,
   imports: [CommonModule],
+  host: { ngSkipHydration: 'true' },
   animations: [
     trigger('fadeOut', [
       state('visible', style({ opacity: 1 })),
@@ -146,7 +147,7 @@ export class LoaderComponent implements OnInit, OnDestroy {
   loaderState: 'visible' | 'hidden' = 'visible';
   progress = 0;
   isComplete = false;
-  variant: LoaderVariant = 'terminal';
+  variant: LoaderVariant | null = null;
 
   // Terminal variant
   visibleLines: { text: string; type: string }[] = [];
@@ -185,7 +186,6 @@ export class LoaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (!this.isBrowser) {
-      this.loaderState = 'hidden';
       return;
     }
 
