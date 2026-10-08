@@ -304,3 +304,21 @@
     height: 45px;
   }
 }
+
+/* Honeypot: hidden from people and assistive tech, still filled by naive bots. */
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-status {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  &.success { color: #10b981; }
+  &.error { color: #f87171; }
+}

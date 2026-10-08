@@ -1,5 +1,5 @@
 export interface Project {
-  id: number;
+  id: number | string;
   title: string;
   description: string;
   longDescription?: string;
@@ -15,7 +15,7 @@ export interface Project {
 }
 
 export interface Experience {
-  id: number;
+  id: number | string;
   company: string;
   role: string;
   period: string;

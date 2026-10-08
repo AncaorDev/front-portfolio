@@ -58,7 +58,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'contact.form.message': 'Mensaje',
     'contact.form.submit': 'Enviar Mensaje',
     'contact.form.submitting': 'Enviando...',
-    'contact.form.success': '¡Mensaje enviado con éxito!',
+    'contact.form.success': '¡Mensaje enviado con éxito! Te responderé pronto.',
+    'contact.form.limited': 'Has enviado varios mensajes seguidos. Inténtalo de nuevo en una hora.',
+    'contact.form.error': 'No se pudo enviar el mensaje. Escríbeme directamente a ancaor.dev@gmail.com.',
     
     'theme.toggle': 'Cambiar Tema',
     'lang.toggle': 'EN/ES'
@@ -116,7 +118,9 @@ export const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'contact.form.message': 'Message',
     'contact.form.submit': 'Send Message',
     'contact.form.submitting': 'Sending...',
-    'contact.form.success': 'Message sent successfully!',
+    'contact.form.success': 'Message sent successfully! I will get back to you soon.',
+    'contact.form.limited': 'You have sent several messages in a row. Please try again in an hour.',
+    'contact.form.error': 'The message could not be sent. Write to me directly at ancaor.dev@gmail.com.',
     
     'theme.toggle': 'Toggle Theme',
     'lang.toggle': 'EN/ES'

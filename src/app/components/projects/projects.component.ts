@@ -34,7 +34,7 @@ export class ProjectsComponent implements OnInit {
     this.portfolioService.getProjects().subscribe({
       next: (data) => {
         this.projects = data;
-        this.filteredProjects = data;
+        this.filterProjects(this.activeFilter);
         this.isLoading = false;
       },
       error: (err) => {

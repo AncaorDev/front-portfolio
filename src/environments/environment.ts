@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000/api',
-  useMockData: true,
+  // Gateway local de back-ancaor-platform; si no responde se muestran los datos incluidos en el sitio.
+  apiUrl: 'http://localhost:4400/api/v1',
+  useMockData: false,
 };
