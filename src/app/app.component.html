@@ -15,14 +15,14 @@
         <a href="#about" class="nav-link" (click)="scrollToSection('about')">{{ 'nav.about' | translate }}</a>
         <a href="#projects" class="nav-link" (click)="scrollToSection('projects')">{{ 'nav.projects' | translate }}</a>
         <a href="#contact" class="nav-link" (click)="scrollToSection('contact')">{{ 'nav.contact' | translate }}</a>
-        <a class="nav-cv-btn" [href]="cvUrl$ | async" target="_blank" rel="noopener noreferrer" id="nav-download-cv">
+        <button type="button" class="nav-cv-btn" (click)="openCv()" id="nav-download-cv">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
             <polyline points="7,10 12,15 17,10" />
             <line x1="12" y1="15" x2="12" y2="3" />
           </svg>
           {{ 'nav.cv' | translate }}
-        </a>
+        </button>
       </div>
 
       <div class="nav-toggles action-toggles">
@@ -65,14 +65,14 @@
         translate }}</a>
       <a href="#contact" class="mobile-link" (click)="scrollToSection('contact'); toggleMenu()">{{ 'nav.contact' |
         translate }}</a>
-      <a class="mobile-link cv-link" [href]="cvUrl$ | async" target="_blank" rel="noopener noreferrer" (click)="toggleMenu()">
+      <button type="button" class="mobile-link cv-link" (click)="openCv()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
           <polyline points="7,10 12,15 17,10" />
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
         {{ 'nav.downloadCv' | translate }}
-      </a>
+      </button>
     </div>
   </nav>
 
@@ -109,4 +109,5 @@
   </div>
 </div>
 
+<app-cv-modal />
 <router-outlet />

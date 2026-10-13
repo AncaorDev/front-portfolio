@@ -1,0 +1,47 @@
+<div class="cv-overlay" *ngIf="cvModal.isOpen()" (click)="onBackdrop($event)" role="presentation">
+  <div class="cv-dialog" role="dialog" aria-modal="true" [attr.aria-label]="'cv.preview.title' | translate" (click)="$event.stopPropagation()">
+    <header class="cv-header">
+      <div>
+        <p class="cv-kicker">{{ 'cv.preview.kicker' | translate }}</p>
+        <h2>{{ 'cv.preview.title' | translate }}</h2>
+      </div>
+      <button type="button" class="cv-icon-btn" (click)="cvModal.close()" [attr.aria-label]="'cv.preview.close' | translate">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </header>
+
+    <div class="cv-body">
+      <div class="cv-status" *ngIf="loading">
+        <span class="cv-spinner"></span>
+        <p>{{ 'cv.preview.loading' | translate }}</p>
+      </div>
+
+      <div class="cv-status" *ngIf="error">
+        <p>{{ 'cv.preview.error' | translate }}</p>
+      </div>
+
+      <iframe
+        *ngIf="previewUrl && !loading && !error"
+        [src]="previewUrl"
+        title="Curriculum"
+      ></iframe>
+    </div>
+
+    <footer class="cv-footer">
+      <button type="button" class="cv-btn cv-btn-ghost" (click)="cvModal.close()">
+        {{ 'cv.preview.close' | translate }}
+      </button>
+      <button type="button" class="cv-btn cv-btn-download" (click)="download()" [disabled]="!document">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7,10 12,15 17,10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        {{ 'cv.preview.download' | translate }}
+      </button>
+    </footer>
+  </div>
+</div>

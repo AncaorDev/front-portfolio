@@ -16,8 +16,7 @@ import {
   query,
   state,
 } from '@angular/animations';
-import { PortfolioService } from '../../services/portfolio.service';
-
+import { CvModalService } from '../../services/cv-modal.service';
 import { TranslatePipe } from '../../pipes/translate.pipe';
 
 @Component({
@@ -71,10 +70,8 @@ export class HeroComponent implements OnInit, OnDestroy {
   private isBrowser: boolean;
   showCursor = true;
 
-  cvUrl$ = this.portfolioService.cvUrl$;
-
   constructor(
-    private portfolioService: PortfolioService,
+    private cvModal: CvModalService,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -127,4 +124,7 @@ export class HeroComponent implements OnInit, OnDestroy {
     }
   }
 
+  openCv(): void {
+    this.cvModal.open();
+  }
 }

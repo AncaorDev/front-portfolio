@@ -150,6 +150,7 @@ body {
   color: white;
   font-weight: 600;
   font-size: 0.8rem;
+  font-family: inherit;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -173,7 +174,7 @@ body {
 }
 
 .mobile-menu.open {
-  max-height: 300px;
+  max-height: 340px;
   padding: 1rem 2rem;
 }
 
@@ -201,6 +202,12 @@ body {
 .mobile-link.cv-link {
   color: #10b981;
   font-weight: 600;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
 }
 
 /* Contenido principal */

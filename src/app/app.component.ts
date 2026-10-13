@@ -17,8 +17,9 @@ import { ContactComponent } from './components/contact/contact.component';
 import { HeroComponent } from './components/hero/hero.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { CvModalComponent } from './components/cv-modal/cv-modal.component';
 import { SeoService } from './services/seo.service';
-import { PortfolioService } from './services/portfolio.service';
+import { CvModalService } from './services/cv-modal.service';
 import { ThemeService } from './services/theme.service';
 import { TranslationService } from './services/translation.service';
 import { TranslatePipe } from './pipes/translate.pipe';
@@ -34,6 +35,7 @@ import { TranslatePipe } from './pipes/translate.pipe';
     ProjectsComponent,
     ContactComponent,
     LoaderComponent,
+    CvModalComponent,
     TranslatePipe
   ],
   animations: [
@@ -65,15 +67,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   currentSection = 0;
   sections = ['home', 'about', 'projects', 'contact'];
   isMenuOpen = false;
-  cvUrl$ = this.portfolioService.cvUrl$;
 
   constructor(
     private seoService: SeoService,
-    private portfolioService: PortfolioService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
     public themeService: ThemeService,
-    public translationService: TranslationService
+    public translationService: TranslationService,
+    public cvModal: CvModalService
   ) {}
 
   ngOnInit() {
@@ -151,8 +152,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
+  openCv(): void {
+    this.isMenuOpen = false;
+    this.cvModal.open();
+  }
+
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
+    if (this.cvModal.isOpen()) {
+      return;
+    }
     switch (event.key) {
       case 'ArrowLeft':
         event.preventDefault();
