@@ -71,6 +71,8 @@ export class HeroComponent implements OnInit, OnDestroy {
   private isBrowser: boolean;
   showCursor = true;
 
+  cvUrl$ = this.portfolioService.cvUrl$;
+
   constructor(
     private portfolioService: PortfolioService,
     @Inject(PLATFORM_ID) platformId: Object
@@ -125,14 +127,8 @@ export class HeroComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadCV() {
-    const cvUrl = this.portfolioService.getCvUrl();
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = 'CV_Anthony_Cajacuri_2026.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  downloadCV(event?: Event) {
+    event?.preventDefault();
+    this.portfolioService.openCv();
   }
 }

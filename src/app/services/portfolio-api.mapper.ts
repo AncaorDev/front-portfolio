@@ -46,7 +46,7 @@ export function toPortfolioContent(api: PublicPortfolio): PortfolioContent {
       github: p.githubUrl ?? '', linkedin: p.linkedinUrl ?? '', yearsOfExperience: p.yearsOfExperience,
       projectsCompleted: p.projectsCompleted, technologiesMastered: p.technologiesMastered,
     },
-    cvUrl: p?.cvUrl ?? null,
+    cvUrl: p?.cvUrl?.trim() || null,
     projects: api.projects.map(project => ({
       id: project.id, title: project.title, description: project.description,
       longDescription: project.longDescription ?? undefined, image: project.imageUrl ?? '',

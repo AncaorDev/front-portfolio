@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, concat, delay, distinctUntilChanged, filter, map, of, shareReplay, switchMap, tap, timeout } from 'rxjs';
+import { Observable, catchError, concat, delay, distinctUntilChanged, filter, last, map, of, shareReplay, startWith, switchMap, take, tap, timeout } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   Project,
@@ -14,6 +14,8 @@ import { MOCK_EXPERIENCES } from '../data/experience.data';
 import { MOCK_SKILLS } from '../data/skills.data';
 import { MOCK_PROFILE } from '../data/profile.data';
 import { PortfolioContent, PublicPortfolio, toPortfolioContent } from './portfolio-api.mapper';
+
+const LOCAL_CV_URL = encodeURI('assets/CV Anthony Cajacuri - 2026 v2.pdf');
 
 const LOCAL_CONTENT: PortfolioContent = {
   profile: MOCK_PROFILE,
@@ -49,7 +51,6 @@ export class PortfolioService {
 
   // Simulación de delay de red (ms) para datos mock
   private mockDelay = 300;
-  private remoteCvUrl: string | null = null;
 
   /**
    * Contenido editado desde app.ancaor.com. Lee la revisión sin caché y luego GET /portfolio/public?v=<revision>. Si el API falla o aún no tiene
@@ -58,8 +59,15 @@ export class PortfolioService {
    * volver a desplegar y la hidratación nunca recibe datos distintos a los del HTML.
    */
   private readonly content$: Observable<PortfolioContent> = this.createContent().pipe(
-    tap(content => (this.remoteCvUrl = content.cvUrl)),
     shareReplay(1)
+  );
+
+  /** URL del CV: `profile.cvUrl` del API, o el PDF incluido en el sitio si aún no hay una. */
+  readonly cvUrl$: Observable<string> = this.content$.pipe(
+    map(content => this.resolveCvUrl(content.cvUrl)),
+    startWith(LOCAL_CV_URL),
+    distinctUntilChanged(),
+    shareReplay({ bufferSize: 1, refCount: true })
   );
 
   getProjects(): Observable<Project[]> {
@@ -89,14 +97,50 @@ export class PortfolioService {
   }
 
   /**
-   * URL del CV para descarga
+   * URL del CV para descarga. Espera el contenido del API (no el snapshot del prerender)
+   * para no quedarse con el PDF local cuando ya hay una URL remota.
    */
-  getCvUrl(): string {
-    return this.remoteCvUrl ?? 'assets/CV Anthony Cajacuri - 2026 v2.pdf';
+  getCvUrl(): Observable<string> {
+    return this.cvUrl$;
   }
 
-  getCvUrlEn(): string {
-    return this.remoteCvUrl ?? 'assets/CV Anthony Cajacuri - 2026 v2.pdf';
+  getCvUrlEn(): Observable<string> {
+    return this.cvUrl$;
+  }
+
+  /** Abre el CV remoto en una pestaña; el PDF local se descarga con el nombre del archivo. */
+  openCv(): void {
+    if (!this.isBrowser) return;
+    this.cvUrl$.pipe(
+      last(),
+      catchError(() => this.cvUrl$.pipe(take(1)))
+    ).subscribe(url => this.navigateToCv(url));
+  }
+
+  private resolveCvUrl(cvUrl: string | null | undefined): string {
+    const url = cvUrl?.trim();
+    if (!url) return LOCAL_CV_URL;
+    if (/^https?:\/\//i.test(url) || url.startsWith('blob:') || url.startsWith('data:')) {
+      return url;
+    }
+    if (url.startsWith('//')) {
+      return `https:${url}`;
+    }
+    return url;
+  }
+
+  private navigateToCv(url: string): void {
+    const remote = /^https?:\/\//i.test(url);
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    if (!remote) {
+      link.download = 'CV_Anthony_Cajacuri.pdf';
+    }
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   private createContent(): Observable<PortfolioContent> {

@@ -65,6 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   currentSection = 0;
   sections = ['home', 'about', 'projects', 'contact'];
   isMenuOpen = false;
+  cvUrl$ = this.portfolioService.cvUrl$;
 
   constructor(
     private seoService: SeoService,
@@ -150,21 +151,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  downloadCV() {
-    // Determine which CV URL to use based on current language
-    const cvUrl = this.translationService.currentLang === 'en' ? 
-                 this.portfolioService.getCvUrlEn() : 
-                 this.portfolioService.getCvUrl();
-                 
-    const link = document.createElement('a');
-    link.href = cvUrl;
-    link.download = this.translationService.currentLang === 'en' ? 
-                   'CV_Anthony_Cajacuri_2026_EN.pdf' :
-                   'CV_Anthony_Cajacuri_2026.pdf';
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  downloadCV(event?: Event) {
+    event?.preventDefault();
+    this.portfolioService.openCv();
   }
 
   @HostListener('window:keydown', ['$event'])
