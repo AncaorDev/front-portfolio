@@ -151,11 +151,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  downloadCV(event?: Event) {
-    event?.preventDefault();
-    this.portfolioService.openCv();
-  }
-
   @HostListener('window:keydown', ['$event'])
   handleKeyDown(event: KeyboardEvent) {
     switch (event.key) {

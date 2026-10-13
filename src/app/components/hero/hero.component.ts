@@ -127,8 +127,4 @@ export class HeroComponent implements OnInit, OnDestroy {
     }
   }
 
-  downloadCV(event?: Event) {
-    event?.preventDefault();
-    this.portfolioService.openCv();
-  }
 }

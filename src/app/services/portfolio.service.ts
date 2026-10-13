@@ -1,7 +1,7 @@
 import { Injectable, PLATFORM_ID, TransferState, inject, makeStateKey } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, concat, delay, distinctUntilChanged, filter, last, map, of, shareReplay, startWith, switchMap, take, tap, timeout } from 'rxjs';
+import { Observable, catchError, concat, delay, distinctUntilChanged, filter, map, of, shareReplay, startWith, switchMap, tap, timeout } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   Project,
@@ -15,7 +15,7 @@ import { MOCK_SKILLS } from '../data/skills.data';
 import { MOCK_PROFILE } from '../data/profile.data';
 import { PortfolioContent, PublicPortfolio, toPortfolioContent } from './portfolio-api.mapper';
 
-const LOCAL_CV_URL = encodeURI('assets/CV Anthony Cajacuri - 2026 v2.pdf');
+const LOCAL_CV_URL = 'assets/cv-anthony-cajacuri.pdf';
 
 const LOCAL_CONTENT: PortfolioContent = {
   profile: MOCK_PROFILE,
@@ -96,27 +96,6 @@ export class PortfolioService {
     return this.http.post<void>(`${this.apiUrl}/portfolio/public/contact`, message).pipe(map(() => undefined));
   }
 
-  /**
-   * URL del CV para descarga. Espera el contenido del API (no el snapshot del prerender)
-   * para no quedarse con el PDF local cuando ya hay una URL remota.
-   */
-  getCvUrl(): Observable<string> {
-    return this.cvUrl$;
-  }
-
-  getCvUrlEn(): Observable<string> {
-    return this.cvUrl$;
-  }
-
-  /** Abre el CV remoto en una pestaña; el PDF local se descarga con el nombre del archivo. */
-  openCv(): void {
-    if (!this.isBrowser) return;
-    this.cvUrl$.pipe(
-      last(),
-      catchError(() => this.cvUrl$.pipe(take(1)))
-    ).subscribe(url => this.navigateToCv(url));
-  }
-
   private resolveCvUrl(cvUrl: string | null | undefined): string {
     const url = cvUrl?.trim();
     if (!url) return LOCAL_CV_URL;
@@ -127,20 +106,6 @@ export class PortfolioService {
       return `https:${url}`;
     }
     return url;
-  }
-
-  private navigateToCv(url: string): void {
-    const remote = /^https?:\/\//i.test(url);
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    if (!remote) {
-      link.download = 'CV_Anthony_Cajacuri.pdf';
-    }
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   }
 
   private createContent(): Observable<PortfolioContent> {

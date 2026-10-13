@@ -88,7 +88,7 @@ front-ancaor/
 
 ## Contenido desde el API
 
-El sitio pide `GET {apiUrl}/portfolio/public`. Si el API no responde en 4 s, falla o todavía no tiene perfil, se muestran los datos incluidos en `src/app/data`. El HTML prerenderizado se hidrata con ese mismo contenido y el navegador lo sustituye cuando el API responde, sin duplicar nodos. El formulario de contacto hace `POST /portfolio/public/contact` (el campo oculto `website` es un honeypot).
+El sitio pide `GET {apiUrl}/portfolio/public/revision` (sin caché) y después `GET {apiUrl}/portfolio/public?v=<revision>`. Si el API no responde en 4 s, falla o todavía no tiene perfil, se muestran los datos incluidos en `src/app/data`. El HTML prerenderizado se hidrata con ese mismo contenido y el navegador lo sustituye cuando el API responde, sin duplicar nodos. El formulario de contacto hace `POST /portfolio/public/contact` (el campo oculto `website` es un honeypot).
 
 `environment.ts` apunta al gateway local (`http://localhost:4400/api/v1`, `useMockData: false`). `environment.prod.ts` apunta al API desplegado y mantiene `useMockData: true`: ancaor.com sigue con los datos locales hasta que el servicio Portfolio esté desplegado y `https://ancaor.com` esté en CORS. Entonces hay que pasar `useMockData` a `false`.
 
